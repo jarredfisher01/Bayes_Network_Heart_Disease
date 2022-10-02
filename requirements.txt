@@ -1,0 +1,9 @@
+pyagrum
+tabulate
+matplotlib
+numpy
+scipy
+scikit-learn
+tk
+pandas
+pydot
