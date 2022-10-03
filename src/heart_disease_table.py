@@ -3,62 +3,11 @@ import csv
 from tqdm import tqdm
 import numpy as np
 
- # row_tuple = (heart_disease, high_blood_pressure, high_cholesterol, smoker, heavy_alcohol, physical_actvity)
+#Creating the pandas dataframe of raw data
 df = pd.DataFrame(columns=['heart_disease','high_blood_pressure','high_cholesterol','smoker','heavy_alcohol','physical_activity'])
-
-#Converting Raw data to pandas CSV
-# with open('./data/health.csv') as csv_file:
-#     csv_reader = csv.reader(csv_file, delimiter=',')
-#     line_count = 0
-
-#     for row in tqdm(csv_reader):
-#         heart_disease = row[0]
-        
-#         if heart_disease=='1.0':
-#             heart_disease = True
-            
-#         else:
-#             heart_disease = False
-        
-#         high_blood_pressure = row[1]
-
-#         if high_blood_pressure =='1.0':
-#             high_blood_pressure = True
-#         else:
-#             high_blood_pressure = False
-        
-#         high_cholesterol = row[2]
-#         if high_cholesterol =='1.0':
-#             high_cholesterol = True
-#         else:
-#             high_cholesterol = False
-        
-#         smoker = row[5]
-#         if smoker == '1.0':
-#             smoker = True
-#         else:
-#             smoker = False
-
-#         physical_actvity = row[8]
-#         if physical_actvity == '1.0':
-#             physical_actvity = True
-#         else:
-#             physical_actvity = False
-
-#         heavy_alcohol = row[11]
-#         if heavy_alcohol == '1.0':
-#             heavy_alcohol = True
-#         else:
-#             heavy_alcohol = False
-    
-#         row_array = [heart_disease, high_blood_pressure, high_cholesterol, smoker, heavy_alcohol, physical_actvity]
-#         df.loc[len(df.index)] = row_array
-
-
-
 df = pd.read_csv('./data/pandas_df.csv')
 
-#Numerator
+#Numerator - Calculting joint probability distribution of 'heart_disease','high_blood_pressure','high_cholesterol','smoker','heavy_alcohol','physical_activity'
 combination_dict = {}
 for index, row in df.iterrows():
     row_tuple = (row['heart_disease'], row['high_blood_pressure'],row['high_cholesterol'],row['smoker'], row['heavy_alcohol'], row['physical_activity'])
@@ -78,7 +27,7 @@ for key, value in combination_dict.items():
 numerator_df  = pd.DataFrame(columns=['heart_disease','high_blood_pressure','high_cholesterol','smoker','heavy_alcohol','physical_activity', 'probability'])
 
 
-#Denominator - evidence
+#Denominator - Calculting joing probability distribution of evidence: 'high_blood_pressure','high_cholesterol','smoker','heavy_alcohol','physical_activity'
 evidence_dict = {}
 for index, row in df.iterrows():
     row_tuple = (row['high_blood_pressure'],row['high_cholesterol'],row['smoker'], row['heavy_alcohol'], row['physical_activity'])
@@ -97,7 +46,7 @@ for key, value in evidence_dict.items():
     evidence_dict[key] = value/total_rows
     sum+=value/total_rows
 
-#Calculating conditional distribution
+#Calculating conditional distribution  - using above values
 conditional_probability_table = {}
 for key, value in combination_dict.items():
     numerator_key = key 
@@ -108,3 +57,56 @@ for key, value in combination_dict.items():
 
     conditional_probability_table[key] = numerator_value/denominator_value
 
+#Add missing row that does not occur in DB 
+conditional_probability_table[(True, False, True, False, True, False)] = 0.0
+
+
+#The following function was used to convert the health.csv file to a pandas dataframe that was saved to the pandas_df.csv
+def convert_to_pandas_df():
+        # Converting Raw data to pandas CSV
+    with open('./data/health.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        line_count = 0
+
+        for row in tqdm(csv_reader):
+            heart_disease = row[0]
+            
+            if heart_disease=='1.0':
+                heart_disease = True
+                
+            else:
+                heart_disease = False
+            
+            high_blood_pressure = row[1]
+
+            if high_blood_pressure =='1.0':
+                high_blood_pressure = True
+            else:
+                high_blood_pressure = False
+            
+            high_cholesterol = row[2]
+            if high_cholesterol =='1.0':
+                high_cholesterol = True
+            else:
+                high_cholesterol = False
+            
+            smoker = row[5]
+            if smoker == '1.0':
+                smoker = True
+            else:
+                smoker = False
+
+            physical_actvity = row[8]
+            if physical_actvity == '1.0':
+                physical_actvity = True
+            else:
+                physical_actvity = False
+
+            heavy_alcohol = row[11]
+            if heavy_alcohol == '1.0':
+                heavy_alcohol = True
+            else:
+                heavy_alcohol = False
+        
+            row_array = [heart_disease, high_blood_pressure, high_cholesterol, smoker, heavy_alcohol, physical_actvity]
+            df.loc[len(df.index)] = row_array
