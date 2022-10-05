@@ -34,6 +34,10 @@ variable ST_Segment_Elevation {
    type discrete[2] {0, 1};
 }
 
+variable Chest_Pain {
+   type discrete[2] {0, 1};
+}
+
 probability (Smokes) {
    default 0.735 0.265;
 }
@@ -93,5 +97,9 @@ probability (MI | Heart_Disease) {
 probability (ST_Segment_Elevation | MI) {
    (0) 0.49 0.51;
    (1) 0.375 0.625;
+}
+probability (Chest_Pain | MI) {
+   (0) 0.75 0.25;
+   (1) 0.333333 0.666667;
 }
 
