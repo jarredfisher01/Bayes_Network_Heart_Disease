@@ -1,13 +1,13 @@
 import model
 
 def main():
-    bn = model.build_model_decision()
+    # bn = model.build_model_decision()
     
-    model.inference_decision(bn)
+    # model.inference_decision(bn)
 
-    # bn = model.build_model()
+    bn = model.build_model()
     
-    # model.inference(bn)
+   # model.inference(bn)
 
 if __name__ == "__main__":
     main()
