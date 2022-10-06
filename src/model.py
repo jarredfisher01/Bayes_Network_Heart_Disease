@@ -11,6 +11,9 @@ links = [('Smokes','Hypertension'),('Hypertension','Heart_Disease'),('Smokes','H
 
 
 def build_model():
+    '''This is the method that makes the nodes and the arcs for the standard Bayesian Network.
+    This method does not include any links/nodes for influence/decision diagram functionality.
+    The method returns the model and exports the model as both a BIF and image files'''
 
     global links
     #Topology:
@@ -35,7 +38,10 @@ def build_model():
     return bn
 
 def build_model_decision():
-
+    '''This is the method that makes the nodes and the arcs for the Decision Network.
+    This method includes creating any links/nodes for influence/decision diagram functionality.
+    We add decision nodes and utility blocks 
+    The method returns the model and exports the model as both a BIF and image files'''
     global links
     dn=gum.InfluenceDiagram()
     for node in nodes:
@@ -74,7 +80,9 @@ def build_model_decision():
     return dn
 
 def addProbabilities(model):
-
+    '''This is the method that represents the raw probability values that get fed into either the bayesian network 
+    or the decision network. We load all the conditional probability tables that are used in both the decision
+    network and the standrad bayesian network all in this method'''
     #Prior Probabilties
     ##########
 
@@ -124,6 +132,11 @@ def addProbabilities(model):
     return model
 
 def inference_decision(model, evidence = None):
+    '''This is a method that can be used from the wrapper.py that can run inferences for the decision network. 
+    It will print out a table that gives the optimal decision given the evidence the network has seen 
+    Its arguments are as follows:
+    model: this is the pyAgrum model that either is the decision network or bayesian model
+    evidence: this is a dictionary that represents evidence i.e. {'Cholesterol':1, 'Hypertension':1}'''
 
     ie = gum.ShaferShenoyLIMIDInference(model)
     if ((evidence is not None) and (isinstance(evidence,dict))):
@@ -135,7 +148,10 @@ def inference_decision(model, evidence = None):
     print(ie.optimalDecision("Call_Ambulance"))
 
 def inference(model, evidence = None):
-    
+    '''This is a method that can be used from the wrapper.py that can run inferences for the standard bayesian network. 
+    Its arguments are as follows:
+    model: this is the pyAgrum model that either is the decision network or bayesian model
+    evidence: this is a dictionary that represents evidence i.e. {'Cholesterol':1, 'Hypertension':1}'''
     ie=gum.LazyPropagation(model)
     if ( (evidence is not None) and (isinstance(evidence,dict))):
         ie.setEvidence(evidence)
@@ -146,6 +162,7 @@ def inference(model, evidence = None):
 
 
 def testIndep(model,x,y,knowing):
+    '''This method tests conditional independence in a model'''
     res="" if model.isIndependent(x,y,knowing) else " NOT"
     giv="." if len(knowing)==0 else f" given {knowing}."
     print(f"{x} and {y} are{res} independent{giv}")

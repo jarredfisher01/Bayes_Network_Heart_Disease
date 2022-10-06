@@ -8,3 +8,5 @@ tk
 pandas
 pydot
 tqdm
+ipykernel
+jupyter

@@ -5,6 +5,7 @@ import numpy as np
 
 
 def get_conditional_dictionary():
+    '''This method reads in a dataset and creates the conditional probability table for the node 'Heart_Disease' from raw dataset data '''
     #Creating the pandas dataframe of raw data
     df = pd.DataFrame(columns=['heart_disease','high_blood_pressure','high_cholesterol','smoker','heavy_alcohol','physical_activity'])
     df = pd.read_csv('./data/pandas_df.csv')
@@ -95,6 +96,7 @@ def get_conditional_dictionary():
 
 #The following function was used to convert the health.csv file to a pandas dataframe that was saved to the pandas_df.csv
 def convert_to_pandas_df():
+    ''' The following function was used to convert the health.csv file to a pandas dataframe that was saved to the pandas_df.csv '''
         # Converting Raw data to pandas CSV
     with open('./data/health.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
