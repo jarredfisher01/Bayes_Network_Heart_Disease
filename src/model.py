@@ -55,20 +55,10 @@ def build_model_decision():
     
     #Utility Node:
     ##############
-    #NOT MI <=> Not an emergency (bad)
-    
-    # 0 0 0
-    # 0 0 1
-    # 0 1 0
-    # 0 1 1
-    # 1 0 0
-    # 1 0 1
-    # 1 1 0
-    # 1 1 1
+
 
     dn.utility('Utility')[{'Call_Ambulance':0,'MI':0}]= 0   #You fine and nothing bad happens + no wasted medical resources
 
-    #-150 working best 
     dn.utility('Utility')[{'Call_Ambulance':0,'MI':1}]= -100   #You dead af
 
     dn.utility('Utility')[{'Call_Ambulance':1,'MI':0}]= -50     #Wasted medical resources (and your own money)
@@ -80,14 +70,6 @@ def build_model_decision():
         print(out.read())
 
     gumImage.export(dn,"./output/MI_decision.png")
-
-    #CPT
-    #############
-    #Pr(Call_Ambulance | MI):
-
-    # dn.cpt('Call_Ambulance')[{'MI':0}] = [0.97,0.03]
-    # dn.cpt('Call_Ambulance')[{'MI':1}] = [0.395,0.605]
-
 
     return dn
 
@@ -127,36 +109,12 @@ def addProbabilities(model):
         model.cpt("Heart_Disease")[key_dict] = [value[0], value[1]]
 
 
-    #P(MI | Heart_Disease):
-
-    # model.cpt('MI')[{'Heart_Disease':0}] = [0.999609,1-0.999609]
-    # model.cpt('MI')[{'Heart_Disease':1}] = [0.5489,0.4511]
-
     #P(ST_Segment_Elevation | MI):
 
     model.cpt("ST_Segment_Elevation")[{'MI':0}] = [0.89,0.11]
     model.cpt("ST_Segment_Elevation")[{'MI':1}] = [0.175,0.825]
 
-    
-
-    # P(Chest Pain | MI):
-
-    # model.cpt('Chest_Pain')[{'MI':0}] = [0.75,0.25]
-    # model.cpt('Chest_Pain')[{'MI':1}] = [1/3,2/3]
-
     #P(MI | Heart_Disease, Chest_Pain):
-
-#     -|-- : 99,96% (1)
-# +|-- : 0,4%
-
-# -|+- 54,89% (1)
-# +|+- 45,11%
-
-# -|-+ : 0.85 (2)
-# +|-+ : 0.15
-
-# -|++ : 0.28
-# +|++ : 0.72 (2)
 
     model.cpt("MI")[{'Heart_Disease':0, 'Chest_Pain':0}] = [0.9996, 0.0004]
     model.cpt("MI")[{'Heart_Disease':0, 'Chest_Pain':1}] = [0.85,0.15]
