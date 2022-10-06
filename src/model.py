@@ -96,7 +96,7 @@ def addProbabilities(model):
     model.cpt("Physical_Activity").fillWith([0.275,0.725])
 
     #P(Cholestrol):
-    model.cpt('Cholesterol').fillWith([0.59,0.41])
+    model.cpt('Cholesterol').fillWith([0.61,0.39])
 
     #P(Chest_Pain):
     model.cpt('Chest_Pain').fillWith([0.7,0.3])
