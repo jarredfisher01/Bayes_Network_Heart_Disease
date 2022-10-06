@@ -106,9 +106,9 @@ def addProbabilities(model):
     #P(Hypertension | Smoking, Alcohol_Abuse):
 
     model.cpt("Hypertension")[{'Smokes':0, 'Alcohol_Abuse':0}] = [0.701, 0.299]
-    model.cpt("Hypertension")[{'Smokes':1, 'Alcohol_Abuse':0}] = [0.715, 0.285]
-    model.cpt("Hypertension")[{'Smokes':0, 'Alcohol_Abuse':1}] = [0.665, 0.335]
-    model.cpt("Hypertension")[{'Smokes':1, 'Alcohol_Abuse':1}] = [0.68, 0.32]
+    model.cpt("Hypertension")[{'Smokes':1, 'Alcohol_Abuse':0}] = [0.635, 0.365]
+    model.cpt("Hypertension")[{'Smokes':0, 'Alcohol_Abuse':1}] = [0.615, 0.385]
+    model.cpt("Hypertension")[{'Smokes':1, 'Alcohol_Abuse':1}] = [0.608, 0.392]
 
     #P(Heart_Disease | Hypertension, Cholesterol, Smokes, Alcohol_Abuse, Physical_Activity)
     heart_disease_cpt = heart_disease_table.get_conditional_dictionary()
