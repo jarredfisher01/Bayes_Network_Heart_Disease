@@ -29,11 +29,11 @@ def build_model():
 
     bn = addProbabilities(bn)
 
-    gum.saveBN(bn,"./output/MI_bayes.bif")
-    # with open("MI_bayes.bif","r") as out:
-    #     print(out.read())
+    gum.saveBN(bn,"MI_bayes.bif")
+    with open("MI_bayes.bif","r") as out:
+        print(out.read())
 
-    gumImage.export(bn,"./output/MI_bayes.png")
+    gumImage.export(bn,"MI_bayes.png")
 
     return bn
 
@@ -71,11 +71,11 @@ def build_model_decision():
 
     dn.utility('Utility')[{'Call_Ambulance':1,'MI':1}]= 100     #Your life will most likely be saved
 
-    dn.saveBIFXML("./output/MI_decision.bifxml")
-    with open("./output/MI_decision.bifxml","r") as out:
+    dn.saveBIFXML("MI_decision.bifxml")
+    with open("MI_decision.bifxml","r") as out:
         print(out.read())
 
-    gumImage.export(dn,"./output/MI_decision.png")
+    gumImage.export(dn,"MI_decision.png")
 
     return dn
 
